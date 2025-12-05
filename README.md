@@ -10,7 +10,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** is scheduled to
 ## 🧭 Architecture Overview
 
 ### **Architecture**
-![Architecture Flow](Assets/iot_architecture.png)
+![Architecture Flow](Assets/iot_architect.png)
 
      ┌───────────────────────────┐
      │  IoT Sensor Simulation    │
