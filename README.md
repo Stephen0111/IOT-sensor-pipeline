@@ -129,19 +129,33 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 ## 📸 Project Screenshots & Diagram
 
 ### **1. Airflow DAG**
-![Airflow DAG](Assets/airflow_dag.png)
+![Airflow DAG](Assets/airflow2.png)
 
-### **2. S3 Buckets**
-- Raw Data: `s3://my-iot-lakehouse/raw/`
-- Processed Delta Lake: `s3://my-iot-lakehouse/processed/iot_data_delta/`
 
-### **3. Delta Lake Tables**
+![Airflow DAG](Assets/airflow.png)
+
+### **2. AWS S3 Buckets**
+![S3](Assets/S3.png)
+![S3](Assets/s3bucket.png)
+
+### **3. AWS Glue**
+![](Assets/glue.png)
+![](Assets/scripts.png)
+
+### **4. AWS Airflow Environment**
+![](Assets/environment1.png)
+![](Assets/environment2.png)
+
+### **5. AWS Kinesis**
+![](Assets/kinesis1.png)
+![](Assets/kinesis2.png)
+
+### **6. Delta Lake Tables**
 - Versioned tables with anomaly flags for each equipment.
+![](Assets/delta1.png)
+![](Assets/delta2.png)
 
-### **4. Architecture Flow**
-![Architecture Flow](Assets/iot_architecture.png)
 
-> *Generated architecture image visually represents the end-to-end IoT Lakehouse pipeline.*
 
 ---
 
