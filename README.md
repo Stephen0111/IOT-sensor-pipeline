@@ -1,7 +1,7 @@
 # IoT Sensor Data Lakehouse with AWS Glue, Kinesis & Delta Lake  
 *A Production-Grade Cloud Data Engineering Pipeline for IoT Predictive Maintenance*
 
-This project is a fully automated **IoT data pipeline** that simulates sensor readings from industrial equipment, stores the raw data in **S3**, performs **batch ETL with AWS Glue**, writes to **Delta Lake tables**, and prepares anomaly-flagged datasets for **predictive maintenance analytics**.
+This project is a fully automated **IoT data pipeline** that simulates sensor readings from industrial equipments, stores the raw data in **S3**, performs **batch ETL with AWS Glue**, writes to **Delta Lake tables**, and prepares anomaly-flagged datasets for **predictive maintenance analytics**.
 
 The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled to run hourly for streaming analytics.
 
