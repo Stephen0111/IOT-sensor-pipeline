@@ -8,7 +8,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 ---
 
 
-## 🧭 Architecture Overview
+## Architecture Overview
 
 ### **Architecture**
 ![Architecture Flow](Assets/architect.png)
@@ -52,30 +52,30 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔹 IoT Sensor Data Simulation
+### IoT Sensor Data Simulation
 - Generates **randomized sensor readings** for equipment:
   - `temperature`, `pressure`, `vibration`, `equipment_id`, `timestamp`
 - Sends data to **Kinesis stream** for streaming purposes.
 - Backs up each batch to **S3 raw storage** for batch ETL.
 - **Scheduled hourly** via Airflow DAG.
 
-### 🔹 Cloud-Orchestrated ETL with Glue
+### Cloud-Orchestrated ETL with Glue
 - Glue job `S3_to_DeltaLake_Batch_Job` reads raw JSON from S3.
 - Aggregates data per equipment (`avg_temperature`, `avg_pressure`, `avg_vibration`).
 - Detects anomalies using thresholds.
 - Writes **Delta Lake tables** partitioned by `equipment_id`.
 - Supports incremental updates (append mode).
 
-### 🔹 Predictive Maintenance Ready
+### Predictive Maintenance Ready
 - Anomalies in temperature, pressure, vibration are flagged automatically.
 - Delta Lake tables serve as **clean, versioned, queryable input** for ML models.
 - Enables proactive maintenance alerts.
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -91,7 +91,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ## 📂 Output Tables (Delta Lake)
 
-### **1️⃣ iot_data_delta**
+### **iot_data_delta**
 - Stored in S3 under `processed/iot_data_delta/`
 - Schema:
 
@@ -110,7 +110,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ---
 
-## ⚡ Workflow Summary
+## Workflow Summary
 
 1. **Airflow DAG triggers** hourly:
    - `generate_sensor_data` → simulates sensor readings.
@@ -127,7 +127,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ---
 
-## 📸 Project Screenshots & Diagram
+## Project Screenshots & Diagram
 
 ### **1. Airflow DAG**
 ![Airflow DAG](Assets/airflow2.png)
