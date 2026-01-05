@@ -89,7 +89,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ---
 
-## 📂 Output Tables (Delta Lake)
+## Output Tables (Delta Lake)
 
 ### **iot_data_delta**
 - Stored in S3 under `processed/iot_data_delta/`
