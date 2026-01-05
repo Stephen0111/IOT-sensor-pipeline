@@ -127,7 +127,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ---
 
-## Project Screenshots & Diagram
+## Project Screenshots 
 
 ### **1. Airflow DAG**
 ![Airflow DAG](Assets/airflow2.png)
