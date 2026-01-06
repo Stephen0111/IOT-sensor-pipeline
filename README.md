@@ -32,7 +32,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
                    │
                    ▼
      ┌───────────────────────────┐
-     │ AWS Glue Batch Job         │
+     │ AWS Glue Batch Job(Pyspark)         │
      │  s3_to_delta_batch.py      │
      └─────────────┬─────────────┘
                    │
@@ -62,7 +62,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 - **Scheduled hourly** via Airflow DAG.
 
 ### Cloud-Orchestrated ETL with Glue
-- Glue job `S3_to_DeltaLake_Batch_Job` reads raw JSON from S3.
+- Glue job `S3_to_DeltaLake_Batch_Job` Pyspark reads raw JSON from S3.
 - Aggregates data per equipment (`avg_temperature`, `avg_pressure`, `avg_vibration`).
 - Detects anomalies using thresholds.
 - Writes **Delta Lake tables** partitioned by `equipment_id`.
