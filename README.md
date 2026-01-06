@@ -61,7 +61,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 - Backs up each batch to **S3 raw storage** for batch ETL.
 - **Scheduled hourly** via Airflow DAG.
 
-### Cloud-Orchestrated ETL with Glue
+### Cloud-Orchestrated ETL with Pyspark and Glue
 - Glue job `S3_to_DeltaLake_Batch_Job` Pyspark reads raw JSON from S3.
 - Aggregates data per equipment (`avg_temperature`, `avg_pressure`, `avg_vibration`).
 - Detects anomalies using thresholds.
