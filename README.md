@@ -32,7 +32,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
                    │
                    ▼
      ┌───────────────────────────┐
-     │ AWS Glue Batch Job(Pyspark)         │
+     │ AWS Glue Job(Pyspark)      │
      │  s3_to_delta_batch.py      │
      └─────────────┬─────────────┘
                    │
