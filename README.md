@@ -8,6 +8,7 @@ Orchestration is handled by **Apache Airflow**, with hourly scheduling to suppor
 ---
 
 ## Architecture Overview
+![IOT](Assets/iot.png)
 
          ┌───────────────────────────┐
          │  IoT Sensor Simulation    │
