@@ -1,77 +1,72 @@
 # IoT Sensor Data Lakehouse with AWS Glue, Kinesis & Delta Lake  
 *A Production-Grade Cloud Data Engineering Pipeline for IoT Predictive Maintenance*
 
-This project is a fully automated cloud native **IoT data pipeline** that simulates sensor readings from industrial equipments, stores the raw data in **S3**, performs **batch ETL with Pyspark and AWS Glue**, writes to **Delta Lake tables**, and prepares anomaly-flagged datasets for **predictive maintenance analytics**.
+This project implements a **scalable, cloud-native IoT data pipeline** designed for predictive maintenance use cases. It simulates industrial sensor telemetry, ingests streaming data via **AWS Kinesis**, persists raw payloads in **Amazon S3**, performs **batch ETL using PySpark on AWS Glue**, and writes structured outputs to **Delta Lake tables**. The pipeline flags anomalies and prepares versioned datasets for downstream analytics and machine learning.
 
-The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled to run hourly for streaming analytics.
+Orchestration is handled by **Apache Airflow**, with hourly scheduling to support near real-time operational insights.
 
 ---
 
-
 ## Architecture Overview
 
-### **Architecture**
-![Architecture Flow](Assets/architect.png)
-
-     ┌───────────────────────────┐
-     │  IoT Sensor Simulation    │
-     │ (PythonOperator in Airflow) │
-     └─────────────┬─────────────┘
-                   │
-                   ▼
-     ┌───────────────────────────┐
-     │  Kinesis Stream            │
-     │  IoTSensorStream           │
-     └─────────────┬─────────────┘
-                   │
-                   ▼
-     ┌───────────────────────────┐
-     │  S3 Raw Bucket             │
-     │  s3://my-iot-lakehouse/raw │
-     └─────────────┬─────────────┘
-                   │
-                   ▼
-     ┌───────────────────────────┐
-     │ AWS Glue Job(Pyspark)      │
-     │  s3_to_delta_batch.py      │
-     └─────────────┬─────────────┘
-                   │
-                   ▼
-     ┌───────────────────────────┐
-     │ Delta Lake Tables          │
-     │  s3://my-iot-lakehouse/processed/iot_data_delta │
-     │  (Aggregated + Anomaly Flags) │
-     └─────────────┬─────────────┘
-                   │
-                   ▼
-     ┌───────────────────────────┐
-     │ Predictive Maintenance     │
-     │ Analytics / ML Models      │
-     └───────────────────────────┘
-
+         ┌───────────────────────────┐
+         │  IoT Sensor Simulation    │
+         │ (PythonOperator in Airflow) │
+         └─────────────┬─────────────┘
+                       │
+                       ▼
+         ┌───────────────────────────┐
+         │  Kinesis Stream            │
+         │  IoTSensorStream           │
+         └─────────────┬─────────────┘
+                       │
+                       ▼
+         ┌───────────────────────────┐
+         │  S3 Raw Bucket             │
+         │  s3://my-iot-lakehouse/raw │
+         └─────────────┬─────────────┘
+                       │
+                       ▼
+         ┌───────────────────────────┐
+         │ AWS Glue Job (PySpark)     │
+         │  s3_to_delta_batch.py      │
+         └─────────────┬─────────────┘
+                       │
+                       ▼
+         ┌───────────────────────────┐
+         │ Delta Lake Tables          │
+         │  s3://my-iot-lakehouse/processed/iot_data_delta │
+         │  (Aggregated + Anomaly Flags) │
+         └─────────────┬─────────────┘
+                       │
+                       ▼
+         ┌───────────────────────────┐
+         │ Predictive Maintenance     │
+         │ Analytics / ML Models      │
+         └───────────────────────────┘
 
 ---
 
 ## Key Features
 
 ### IoT Sensor Data Simulation
-- Generates **randomized sensor readings** for equipment:
+- Simulates telemetry for industrial equipment:
   - `temperature`, `pressure`, `vibration`, `equipment_id`, `timestamp`
-- Sends data to **Kinesis stream** for streaming purposes.
-- Backs up each batch to **S3 raw storage** for batch ETL.
-- **Scheduled hourly** via Airflow DAG.
+- Streams data to **Kinesis** for ingestion.
+- Persists raw batches in **S3** for ETL.
+- Scheduled hourly via Airflow DAG.
 
-### Cloud-Orchestrated ETL with Pyspark and Glue
-- Glue job `S3_to_DeltaLake_Batch_Job` Pyspark reads raw JSON from S3.
-- Aggregates data per equipment (`avg_temperature`, `avg_pressure`, `avg_vibration`).
-- Detects anomalies using thresholds.
-- Writes **Delta Lake tables** partitioned by `equipment_id`.
-- Supports incremental updates (append mode).
+### Cloud-Orchestrated ETL with PySpark and Glue
+- Glue job reads raw JSON from S3.
+- Aggregates metrics per equipment (`avg_temperature`, `avg_pressure`, `avg_vibration`).
+- Applies rule-based anomaly detection.
+- Writes partitioned **Delta Lake tables** for efficient querying.
+- Supports incremental append mode for versioned history.
 
 ### Predictive Maintenance Ready
-- Anomalies in temperature, pressure, vibration are flagged automatically.
-- Delta Lake tables serve as **clean, versioned, queryable input** for ML models.
-- Enables proactive maintenance alerts.
+- Flags anomalies based on domain thresholds.
+- Delta tables serve as clean, queryable input for ML pipelines.
+- Enables proactive failure detection and maintenance scheduling.
 
 ---
 
@@ -80,20 +75,20 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 | Layer | Technology | Purpose |
 |-------|------------|---------|
 | **Orchestration** | Apache Airflow | DAG scheduling & workflow management |
-| **Streaming** | AWS Kinesis Data Stream | Sensor data ingestion |
-| **Data Lake / Storage** | AWS S3 | Raw & processed sensor storage |
-| **Batch ETL** | AWS Glue (PySpark) | Read, aggregate, anomaly detection, write Delta |
+| **Streaming** | AWS Kinesis Data Stream | Real-time sensor ingestion |
+| **Data Lake / Storage** | AWS S3 | Durable raw and processed storage |
+| **Batch ETL** | AWS Glue (PySpark) | Aggregation, anomaly detection, Delta write |
 | **Data Format** | Delta Lake | Versioned, append-only, queryable tables |
-| **Language** | Python | ETL & sensor simulation logic |
-| **Libraries** | PySpark, awsglue, boto3 | ETL, Delta, AWS SDK integration |
+| **Language** | Python | Sensor simulation & ETL logic |
+| **Libraries** | PySpark, awsglue, boto3 | AWS SDK integration & transformation logic |
 
 ---
 
 ## Output Tables (Delta Lake)
 
 ### **iot_data_delta**
-- Stored in S3 under `processed/iot_data_delta/`
-- Schema:
+Stored in S3 under `processed/iot_data_delta/`.  
+Partitioned by `equipment_id` for optimized access.
 
 | Column | Description |
 |--------|-------------|
@@ -106,7 +101,7 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 | vibration_anomaly | True if vibration > 4.5 |
 | processed_at | ETL processing timestamp |
 
-> Data is **incrementally appended** each DAG run, creating a **versioned history** for analytics and predictive models.
+> Data is incrementally appended each DAG run, creating a versioned history for analytics and ML.
 
 ---
 
@@ -114,16 +109,16 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 1. **Airflow DAG triggers** hourly:
    - `generate_sensor_data` → simulates sensor readings.
-   - `verify_s3_files` → ensures raw files exist in S3.
-   - `s3_to_delta_batch_job` → Glue job transforms raw data into Delta Lake.
-2. **Data transformation**:
-   - Convert timestamp
-   - Compute aggregates per equipment
-   - Flag anomalies
-3. **Delta Lake** stores clean, queryable tables for ML or BI.
+   - `verify_s3_files` → validates raw ingestion.
+   - `s3_to_delta_batch_job` → transforms and writes to Delta Lake.
+2. **ETL logic**:
+   - Timestamp normalization
+   - Equipment-level aggregation
+   - Anomaly flagging
+3. **Delta Lake** stores clean, queryable tables.
 4. **Predictive Maintenance**:
-   - ML models or analytics dashboards query Delta tables.
-   - Detects patterns and predicts potential equipment failure.
+   - ML models and dashboards consume Delta tables.
+   - Enables early detection of equipment failure patterns.
 
 ---
 
@@ -131,8 +126,6 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 
 ### **1. Airflow DAG**
 ![Airflow DAG](Assets/airflow2.png)
-
-
 ![Airflow DAG](Assets/airflow.png)
 
 ### **2. AWS S3 Buckets**
@@ -156,8 +149,6 @@ The pipeline is orchestrated end-to-end using **Apache Airflow** and scheduled t
 ![](Assets/delta1.png)
 ![](Assets/delta2.png)
 
-
-
 ---
 
-This setup ensures a **robust, production-grade IoT ETL pipeline**, with hourly data ingestion, automated anomaly detection, and predictive maintenance readiness.
+This pipeline delivers a **robust, production-grade IoT lakehouse architecture**, combining streaming ingestion, scalable ETL, and predictive analytics readiness.
