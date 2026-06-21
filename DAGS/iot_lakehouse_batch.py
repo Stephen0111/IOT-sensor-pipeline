@@ -10,7 +10,7 @@ import logging
 import os
 
 
-# CONFIGURATION
+# CONFIGURATION SECTION
 
 
 REGION = os.getenv("AWS_REGION", "eu-north-1")
